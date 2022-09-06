@@ -6,6 +6,8 @@ import {
 } from '@react-navigation/stack';
 
 import {Onboarding} from '../screens';
+import {useAppSelector, useAppDispatch} from '../hooks';
+import {isFirstTimeUser, setFirstTime} from '../store';
 
 export type MainStackNavigationProps = StackNavigationProp<ScreensList, 'Home'>;
 
@@ -17,6 +19,16 @@ type ScreensList = {
 const Stack = createStackNavigator<ScreensList>();
 
 const RootNavigator = () => {
+  const dispatch = useAppDispatch();
+  const isFirstTime = useAppSelector(isFirstTimeUser);
+  console.log(isFirstTime);
+
+  React.useEffect(() => {
+    if (isFirstTime) {
+      dispatch(setFirstTime(false));
+    }
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
