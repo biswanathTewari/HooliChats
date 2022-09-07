@@ -1,9 +1,9 @@
 import React from 'react';
 import {Dimensions, Animated} from 'react-native';
-import {View, Text, Center, Heading, FlatList, VStack} from 'native-base';
+import {View} from 'native-base';
 
 import {GreetingType} from './index';
-import {PersonOneSvg, PersonTwoSvg, PersonThreeSvg, Dummy1} from '../../assets';
+import {ms, vs} from '../../utils';
 
 const {width} = Dimensions.get('window');
 const AnimatedView = Animated.createAnimatedComponent(View);
@@ -69,7 +69,7 @@ const FriendsCircle = ({
   return (
     <AnimatedView
       bg={'primary.500'}
-      p="3"
+      p={ms(10)}
       borderRadius={'full'}
       position={'absolute'}
       left={'3'}
@@ -98,7 +98,7 @@ const Indicator = ({
 }) => {
   return (
     <View
-      marginTop={'10'}
+      //marginTop={ms(10)}
       width={width}
       flexDirection={'row'}
       justifyContent={'center'}>
@@ -123,10 +123,10 @@ const Indicator = ({
             key={index.toString()}
             bg={'primary.600'}
             opacity={opacity}
-            height={'3'}
-            width={'3'}
+            height={vs(10)}
+            width={vs(10)}
             borderRadius={'50'}
-            margin={'3'}
+            margin={ms(10)}
             style={{
               transform: [{scale}],
             }}

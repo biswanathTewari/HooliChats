@@ -99,7 +99,7 @@ const Onboarding = () => {
   }, []);
 
   return (
-    <VStack safeArea flex={1}>
+    <VStack safeArea flex={1} justifyContent={'space-between'}>
       <AnimatedVisiuals scrollX={YOLO} />
       <View
         position={'absolute'}
@@ -128,12 +128,12 @@ const Onboarding = () => {
           x={hs(55)}
           dx={hs(45)}
           y={vs(280)}
-          dy={vs(290)}
+          dy={vs(320)}
           svg={<Dummy3 width={hs(25)} height={hs(25)} />}
         />
       </View>
 
-      <View flex={0.8}>
+      <View flex={0.75}>
         <AnimatedFlatList
           // @ts-ignore: Custom Animated FlatList
           ref={carouselRef}
@@ -145,17 +145,17 @@ const Onboarding = () => {
           showsHorizontalScrollIndicator={false}
           renderItem={({item}: any) => (
             <Center flex={1} width={width}>
-              <Center flex={0.8} width={width}>
-                <View bg={'primary.500'} p="5" borderRadius={'full'}>
+              <Center flex={1} width={width}>
+                <View bg={'primary.500'} p={ms(5)} borderRadius={'full'}>
                   {item.image}
                 </View>
               </Center>
-              <View flex={0.2} width={width} px={'5'}>
-                <Heading mb={'2'} fontFamily={'Poppins-Bold'}>
+              <View width={width} px={hs(20)}>
+                <Heading mb={vs(4)} fontFamily={'Poppins-Bold'}>
                   {item.title}
                 </Heading>
                 <Text
-                  fontSize={'16'}
+                  fontSize={ms(16)}
                   fontWeight={'500'}
                   fontFamily={'Poppins-Regular'}>
                   {item.description}
@@ -184,18 +184,18 @@ const Onboarding = () => {
               }).start();
             }
           }}
+          mb={vs(10)}
         />
       </View>
 
       <Indicator scrollX={scrollX} Greetings={Greetings} />
       <HStack
         //bg={'red.400'}
-        flex={0.2}
         justifyContent={'space-between'}
         alignItems={'flex-end'}
-        p={'5'}>
+        p={ms(5)}>
         <Button height={ms(50)}>
-          <Text fontSize={'16'} fontWeight={'500'}>
+          <Text fontSize={ms(16)} fontWeight={'500'}>
             Skip
           </Text>
         </Button>
