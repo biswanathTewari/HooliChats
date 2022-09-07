@@ -1,11 +1,12 @@
 import React from 'react';
+import {SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
 
-import {Onboarding} from '../screens';
+import {Onboarding, Login, Signup} from '../screens';
 import {useAppSelector, useAppDispatch} from '../hooks';
 import {isFirstTimeUser, setFirstTime} from '../store';
 
@@ -14,6 +15,8 @@ export type MainStackNavigationProps = StackNavigationProp<ScreensList, 'Home'>;
 type ScreensList = {
   Home: undefined;
   Onboarding: undefined;
+  Login: undefined;
+  Signup: undefined;
 };
 
 const Stack = createStackNavigator<ScreensList>();
@@ -34,8 +37,11 @@ const RootNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-        }}>
+        }}
+        initialRouteName={isFirstTime ? 'Onboarding' : 'Signup'}>
         <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Signup" component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>
   );
