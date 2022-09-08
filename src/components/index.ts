@@ -1,3 +1,4 @@
 import TextInput from './TextInput';
+import {ToastComponent, showToast} from './ToastComponent';
 
-export {TextInput};
+export {TextInput, ToastComponent, showToast};
