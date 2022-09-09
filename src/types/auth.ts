@@ -16,6 +16,13 @@ export interface ILoginRes {
   user: IUser;
 }
 
+export interface ISignupParam {
+  email: string;
+  password: string;
+  fullName: string;
+  userName: string;
+}
+
 export interface IAuth {
   token: string | null;
   loading: boolean;

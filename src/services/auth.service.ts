@@ -1,17 +1,33 @@
 import {callApi} from './https.service';
-import {ILoginParam, ILoginRes} from '../types';
+import {ILoginParam, ILoginRes, ISignupParam} from '../types';
 
-// export async function signUpService({email, password}: IAuthParam) {
-//   const response = await callApi('/api/auth/signup', {
-//     method: 'POST',
-//     body: {
-//       email,
-//       password,
-//     },
-//   });
+export async function signUpService({
+  email,
+  password,
+  fullName,
+  userName,
+}: ISignupParam): Promise<ILoginRes> {
+  const response = await callApi('/api/auth/signup', {
+    method: 'POST',
+    body: {
+      email,
+      password,
+      fullName,
+      userName,
+    },
+  });
 
-//   return response;
-// }
+  return {
+    token: response.data.encodedToken,
+    user: {
+      _id: response.data.createdUser._id,
+      userName: response.data.createdUser.username,
+      firstName: response.data.createdUser.firstName,
+      lastName: response.data.createdUser.lastName,
+      email: response.data.createdUser.email,
+    },
+  };
+}
 
 export async function loginService({
   userName,

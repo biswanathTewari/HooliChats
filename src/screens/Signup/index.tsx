@@ -1,49 +1,131 @@
 import React from 'react';
-import {Text, VStack, Heading, Button, HStack, Pressable} from 'native-base';
+import {
+  Text,
+  VStack,
+  Heading,
+  Button,
+  HStack,
+  Pressable,
+  ScrollView,
+} from 'native-base';
 
 import {hs, ms, vs} from '../../utils';
-import {TextInput} from '../../components';
+import {TextInput, showToast} from '../../components';
+import {useAuthForm, useAppDispatch} from '../../hooks';
+import {signupStart} from '../../store';
 
 const Signup = () => {
+  const dispatch = useAppDispatch();
+  const {
+    creds,
+    error,
+    onBlurHandler,
+    onChangeHandler,
+    validateForm,
+    resetForm,
+  } = useAuthForm({checkErrorMsg: '', optionalCheck: false});
+
+  const signupHanlder = async (
+    userName: string,
+    password: string,
+    fullName: string,
+    email: string = '',
+  ) => {
+    dispatch(signupStart({userName, password, fullName, email}));
+    resetForm();
+    //navigate(from, { replace: true })
+  };
+
+  const onSubmitHandler = (e: any) => {
+    e.preventDefault();
+    if (validateForm()) {
+      signupHanlder(
+        creds.userName,
+        creds.password,
+        creds.fullName,
+        creds.email,
+      );
+    } else {
+      showToast('Bhai kya kar raha hai tu? hack kar');
+    }
+  };
   return (
     <VStack safeArea {...styles.container}>
       <VStack flex={1}>
         <Heading {...styles.heading}>Sign Up</Heading>
         <Text {...styles.subHeading}>Create your account</Text>
 
-        <TextInput
-          defaultValue=""
-          label="Full Name"
-          placeholder="Enter your name"
-          type="text"
-          isRequired={true}
-          isInvalid={false}
-          errorMessage="Name is required"
-          helperText="Provide your full name"
-        />
-        <TextInput
-          defaultValue=""
-          label="Email"
-          placeholder="Enter your email"
-          type="email"
-          isRequired={true}
-          isInvalid={false}
-          errorMessage="Email is required"
-          helperText="We will never share your email"
-        />
-        <TextInput
-          defaultValue=""
-          label="Password"
-          placeholder="Enter your password"
-          type="password"
-          isRequired={true}
-          isInvalid={false}
-          errorMessage="Password is required"
-          helperText="Your password is safe with us"
-        />
+        <ScrollView>
+          <TextInput
+            id="fullName"
+            defaultValue=""
+            label="Full Name"
+            placeholder="Enter your name"
+            type="text"
+            value={creds.fullName}
+            onChangeHandler={onChangeHandler}
+            onBlurHandler={onBlurHandler}
+            isRequired={true}
+            // @ts-ignore: checking for dyanmic key
+            isInvalid={error && error.fullName ? true : false}
+            // @ts-ignore: checking for dyanmic key
+            errorMessage={error && error.fullName ? error.userName : ''}
+            helperText="Provide your full name"
+          />
+          <TextInput
+            id="email"
+            defaultValue=""
+            label="Email"
+            placeholder="Enter your email"
+            type="email"
+            value={creds.email!}
+            onChangeHandler={onChangeHandler}
+            onBlurHandler={onBlurHandler}
+            isRequired={true}
+            // @ts-ignore: checking for dyanmic key
+            isInvalid={error && error.email ? true : false}
+            // @ts-ignore: checking for dyanmic key
+            errorMessage={error && error.email ? error.userName : ''}
+            helperText="We will never share your email"
+          />
+          <TextInput
+            id="userName"
+            defaultValue="iambizan"
+            label="Username"
+            placeholder="Enter your username"
+            type="text"
+            value={creds.userName}
+            onChangeHandler={onChangeHandler}
+            onBlurHandler={onBlurHandler}
+            isRequired={true}
+            // @ts-ignore: checking for dyanmic key
+            isInvalid={error && error.userName ? true : false}
+            // @ts-ignore: checking for dyanmic key
+            errorMessage={error && error.userName ? error.userName : ''}
+            helperText="Your username is your unique identity"
+          />
+          <TextInput
+            id="password"
+            defaultValue="bizanisthebest"
+            label="Password"
+            placeholder="Enter your password"
+            type="password"
+            value={creds.password}
+            onChangeHandler={onChangeHandler}
+            onBlurHandler={onBlurHandler}
+            isRequired={true}
+            // @ts-ignore: checking for dyanmic key
+            isInvalid={error && error.password ? true : false}
+            // @ts-ignore: checking for dyanmic key
+            errorMessage={error && error.password ? error.password : ''}
+            helperText="Your password is safe with us"
+          />
+        </ScrollView>
       </VStack>
       <VStack {...styles.bottomContainer}>
-        <Button {...styles.button}>Done</Button>
+        <Button {...styles.button} onPress={onSubmitHandler}>
+          Done
+        </Button>
         <HStack {...styles.msg}>
           <Text {...styles.msgTxt}>Already have an account? </Text>
           <Pressable>

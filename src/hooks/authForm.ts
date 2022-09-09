@@ -85,7 +85,7 @@ const useAuthForm = ({
     //~ signup form
     if (!optionalCheck) {
       // @ts-ignore: creating new error property
-      if (!checkValue) errors.checkValue = checkErrorMsg;
+      //if (!checkValue) errors.checkValue = checkErrorMsg;
       if (!email) {
         // @ts-ignore: creating new error property
         errors.email = 'Email is required';
