@@ -55,7 +55,7 @@ const Signup = () => {
         <Heading {...styles.heading}>Sign Up</Heading>
         <Text {...styles.subHeading}>Create your account</Text>
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.scroll}>
           <TextInput
             id="fullName"
             defaultValue=""
@@ -189,5 +189,8 @@ const styles = {
     fontFamily: 'Poppins-Regular',
     color: 'primary.700',
     fontWeight: '400',
+  },
+  scroll: {
+    paddingBottom: vs(50),
   },
 };
