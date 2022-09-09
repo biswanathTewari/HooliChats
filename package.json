@@ -27,6 +27,7 @@
     "react-native-config": "^1.4.6",
     "react-native-easy-toast": "^2.0.0",
     "react-native-gesture-handler": "^2.6.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-safe-area-context": "^3.4.1",
     "react-native-screens": "^3.17.0",
     "react-native-svg": "^12.4.4",

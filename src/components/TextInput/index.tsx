@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormControl, Input, Text, KeyboardAvoidingView} from 'native-base';
+import {FormControl, Input, Text, View} from 'native-base';
 import {hs, ms, vs} from '../../utils';
 
 interface Props {
@@ -32,7 +32,7 @@ const TextInput = ({
   onBlurHandler,
 }: Props) => {
   return (
-    <KeyboardAvoidingView {...styles.container}>
+    <View {...styles.container}>
       <FormControl isRequired={isRequired} isInvalid={isInvalid}>
         <FormControl.Label>
           <Text {...styles.label}>{label}</Text>
@@ -60,7 +60,7 @@ const TextInput = ({
           </Text>
         </FormControl.ErrorMessage>
       </FormControl>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

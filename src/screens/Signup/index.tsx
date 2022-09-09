@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  Text,
-  VStack,
-  Heading,
-  Button,
-  HStack,
-  Pressable,
-  ScrollView,
-} from 'native-base';
+import {Text, VStack, Heading, Button, HStack, Pressable} from 'native-base';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {hs, ms, vs} from '../../utils';
 import {TextInput, showToast} from '../../components';
@@ -51,11 +44,13 @@ const Signup = () => {
   };
   return (
     <VStack safeArea {...styles.container}>
-      <VStack flex={1}>
-        <Heading {...styles.heading}>Sign Up</Heading>
-        <Text {...styles.subHeading}>Create your account</Text>
+      <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        style={{flex: 1}}>
+        <VStack flex={1} pb={vs(20)}>
+          <Heading {...styles.heading}>Sign Up</Heading>
+          <Text {...styles.subHeading}>Create your account</Text>
 
-        <ScrollView contentContainerStyle={styles.scroll}>
           <TextInput
             id="fullName"
             defaultValue=""
@@ -120,19 +115,19 @@ const Signup = () => {
             errorMessage={error && error.password ? error.password : ''}
             helperText="Your password is safe with us"
           />
-        </ScrollView>
-      </VStack>
-      <VStack {...styles.bottomContainer}>
-        <Button {...styles.button} onPress={onSubmitHandler}>
-          Done
-        </Button>
-        <HStack {...styles.msg}>
-          <Text {...styles.msgTxt}>Already have an account? </Text>
-          <Pressable>
-            <Text {...styles.msgLink}>Sign In</Text>
-          </Pressable>
-        </HStack>
-      </VStack>
+        </VStack>
+        <VStack {...styles.bottomContainer}>
+          <Button {...styles.button} onPress={onSubmitHandler}>
+            Done
+          </Button>
+          <HStack {...styles.msg}>
+            <Text {...styles.msgTxt}>Already have an account? </Text>
+            <Pressable>
+              <Text {...styles.msgLink}>Sign In</Text>
+            </Pressable>
+          </HStack>
+        </VStack>
+      </KeyboardAwareScrollView>
     </VStack>
   );
 };
@@ -143,7 +138,7 @@ const styles = {
   container: {
     flex: 1,
     px: hs(30),
-    py: vs(20),
+    pt: vs(20),
   },
   heading: {
     fontSize: ms(22),
@@ -191,6 +186,6 @@ const styles = {
     fontWeight: '400',
   },
   scroll: {
-    paddingBottom: vs(50),
+    paddingBottom: vs(10),
   },
 };
