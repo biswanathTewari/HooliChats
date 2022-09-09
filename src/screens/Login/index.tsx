@@ -2,37 +2,79 @@ import React from 'react';
 import {Text, VStack, Heading, Button, HStack, Pressable} from 'native-base';
 
 import {hs, ms, vs} from '../../utils';
-import {TextInput} from '../../components';
+import {useAuthForm} from '../../hooks';
+import {TextInput, showToast} from '../../components';
+import {useAppDispatch} from '../../hooks';
+import {loginStart} from '../../store';
 
 const Login = () => {
+  const {
+    creds,
+    error,
+    onBlurHandler,
+    onChangeHandler,
+    validateForm,
+    resetForm,
+  } = useAuthForm({checkErrorMsg: '', optionalCheck: true});
+  const dispatch = useAppDispatch();
+
+  const loginHandler = async (userName: string, password: string) => {
+    dispatch(loginStart({userName, password}));
+    resetForm();
+    //navigate(from, { replace: true })
+  };
+
+  const onSubmitHandler = (e: any) => {
+    e.preventDefault();
+    if (validateForm()) {
+      loginHandler(creds.userName, creds.password);
+    } else {
+      showToast('Bhai kya kar raha hai tu? hack kar');
+    }
+  };
+
   return (
     <VStack safeArea {...styles.container}>
       <VStack flex={1}>
         <Heading {...styles.heading}>Sign In</Heading>
         <Text {...styles.subHeading}>Enter your credentials</Text>
         <TextInput
-          defaultValue=""
-          label="Email"
-          placeholder="Enter your email"
-          type="email"
+          id="userName"
+          defaultValue="iambizan"
+          label="Username"
+          placeholder="Enter your username"
+          type="text"
+          value={creds.userName}
+          onChangeHandler={onChangeHandler}
+          onBlurHandler={onBlurHandler}
           isRequired={true}
-          isInvalid={false}
-          errorMessage="Email is required"
-          helperText="We will never share your email"
+          // @ts-ignore: checking for dyanmic key
+          isInvalid={error && error.userName ? true : false}
+          // @ts-ignore: checking for dyanmic key
+          errorMessage={error && error.userName ? error.userName : ''}
+          helperText="Your username is your unique identity"
         />
         <TextInput
-          defaultValue=""
+          id="password"
+          defaultValue="bizanisthebest"
           label="Password"
           placeholder="Enter your password"
           type="password"
+          value={creds.password}
+          onChangeHandler={onChangeHandler}
+          onBlurHandler={onBlurHandler}
           isRequired={true}
-          isInvalid={false}
-          errorMessage="Password is required"
+          // @ts-ignore: checking for dyanmic key
+          isInvalid={error && error.password ? true : false}
+          // @ts-ignore: checking for dyanmic key
+          errorMessage={error && error.password ? error.password : ''}
           helperText="Your password is safe with us"
         />
       </VStack>
       <VStack {...styles.bottomContainer}>
-        <Button {...styles.button}>Done</Button>
+        <Button onPress={onSubmitHandler} {...styles.button}>
+          Done
+        </Button>
         <HStack {...styles.msg}>
           <Text {...styles.msgTxt}>Don't have an account? </Text>
           <Pressable>

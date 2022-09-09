@@ -1,11 +1,14 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 
-import user from './user/user.store';
+import {middleware, sagaMiddleware} from './middleware';
+import {rootSaga} from './rootSaga';
 import {persistConfig} from './persistConfig';
 
+import auth from './auth/auth.store';
+
 const combineReducer = combineReducers({
-  user,
+  auth,
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -19,10 +22,13 @@ const rootReducer = (state: any, action: any) => {
 
 export const store = configureStore({
   reducer: persistReducer(persistConfig, rootReducer),
+  middleware,
 });
+
+sagaMiddleware.run(rootSaga);
 
 export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export * from './user/user.selector';
-export * from './user/user.store';
+export * from './auth/auth.selectors';
+export * from './auth/auth.store';

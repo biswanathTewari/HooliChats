@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  Box,
-  FormControl,
-  Stack,
-  Input,
-  Text,
-  KeyboardAvoidingView,
-} from 'native-base';
+import {FormControl, Input, Text, KeyboardAvoidingView} from 'native-base';
 import {hs, ms, vs} from '../../utils';
 
 interface Props {
+  id: string;
   isRequired?: boolean;
   isInvalid?: boolean;
   label: string;
@@ -18,9 +12,13 @@ interface Props {
   errorMessage: string;
   type?: string;
   defaultValue: string;
+  value: string;
+  onChangeHandler: (id: string, val: string) => void;
+  onBlurHandler: (id: string, e: any) => void;
 }
 
 const TextInput = ({
+  id,
   isRequired = false,
   isInvalid = false,
   label,
@@ -29,6 +27,9 @@ const TextInput = ({
   errorMessage,
   type = 'text',
   defaultValue,
+  value,
+  onChangeHandler,
+  onBlurHandler,
 }: Props) => {
   return (
     <KeyboardAvoidingView {...styles.container}>
@@ -37,9 +38,15 @@ const TextInput = ({
           <Text {...styles.label}>{label}</Text>
         </FormControl.Label>
         <Input
+          id={id}
           type={type}
           defaultValue={defaultValue}
           placeholder={placeholder}
+          value={value}
+          onChangeText={val => onChangeHandler(id, val)}
+          onBlur={e => onBlurHandler(id, e)}
+          autoCapitalize="none"
+          autoCorrect={false}
           {...styles.input}
         />
         {helperText && (
