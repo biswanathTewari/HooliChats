@@ -11,12 +11,14 @@ import {
 } from './auth.store';
 import {loginService, signUpService} from '../../services';
 import {ILoginRes} from '../../types';
+import {navigate} from '../../utils';
 
 function* loginSaga(action: ReturnType<typeof loginStart>) {
   try {
     const response: ILoginRes = yield call(loginService, action.payload);
     yield put(loginSuccess(response));
     yield showToast('Login Success!');
+    yield navigate('Home');
   } catch (error: any) {
     showToast(error.message);
     yield put(loginFail(error.message));
@@ -28,6 +30,7 @@ function* signupSaga(action: ReturnType<typeof signupStart>) {
     const response: ILoginRes = yield call(signUpService, action.payload);
     yield put(signupSuccess(response));
     yield showToast('Signup Success!');
+    yield navigate('Home');
   } catch (error: any) {
     showToast(error.message);
     yield put(signupFail(error.message));

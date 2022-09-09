@@ -7,6 +7,7 @@ const initialState: IAuth = {
   error: null,
   user: null,
   firstTime: false,
+  loggedIn: false,
 };
 
 const authSlice = createSlice({
@@ -20,6 +21,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.loading = false;
+      state.loggedIn = true;
     },
     loginFail(state, action: PayloadAction<any>) {
       state.error = action.payload;
@@ -35,6 +37,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.loading = false;
+      state.loggedIn = true;
     },
     signupFail(state, action: PayloadAction<any>) {
       state.error = action.payload;

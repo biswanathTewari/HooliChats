@@ -29,4 +29,5 @@ export interface IAuth {
   error: string | null;
   user: IUser | null;
   firstTime: boolean;
+  loggedIn: boolean;
 }
