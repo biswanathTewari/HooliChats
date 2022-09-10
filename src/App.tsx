@@ -6,6 +6,7 @@ import {persistStore} from 'redux-persist';
 
 import customTheme from './theme';
 import RootNavigator from './navigation';
+import {ToastComponent} from './components';
 import {store} from './store';
 
 export const persistor = persistStore(store);
@@ -15,6 +16,7 @@ const App = () => {
     <NativeBaseProvider theme={customTheme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+          <ToastComponent />
           <RootNavigator />
         </PersistGate>
       </Provider>
