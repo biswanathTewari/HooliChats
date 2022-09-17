@@ -5,7 +5,7 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 
-import {Onboarding, Login, Signup, Home} from '../screens';
+import {Onboarding, Login, Signup, Home, Chats} from '../screens';
 import {useAppSelector, useAppDispatch} from '../hooks';
 import {isFirstTimeUser, setFirstTime, isUserLoggedIn} from '../store';
 import {setNavigator} from '../utils';
@@ -17,6 +17,7 @@ type ScreensList = {
   Onboarding: undefined;
   Login: undefined;
   Signup: undefined;
+  Chats: undefined;
 };
 
 const Stack = createStackNavigator<ScreensList>();
@@ -50,7 +51,7 @@ const RootNavigator = () => {
             <Stack.Screen name="Signup" component={Signup} />
           </>
         ) : (
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Chats" component={Chats} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
