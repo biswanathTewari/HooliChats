@@ -1,4 +1,5 @@
 import React from 'react';
+import {Animated} from 'react-native';
 import {
   Text,
   View,
@@ -12,6 +13,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {SPACING} from '../../constants';
 import {hs, ms, vs} from '../../utils';
+
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 interface IProps {
   userImg: string;
@@ -34,6 +37,29 @@ const Card = ({
 }: IProps) => {
   const displayContext =
     postDesc.length > 75 ? postDesc.slice(0, 75) + '...' : postDesc;
+
+  const [isLiked, setIsLiked] = React.useState(false);
+  const bouncyValue = React.useRef(new Animated.Value(0)).current;
+
+  const bouncyScale = bouncyValue.interpolate({
+    inputRange: [0, 1, 2],
+    outputRange: [1, 0.5, 1],
+  });
+
+  const likeStyles = {
+    transform: [{scale: bouncyScale}],
+  };
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    Animated.spring(bouncyValue, {
+      toValue: 2,
+      useNativeDriver: true,
+    }).start(() => {
+      bouncyValue.setValue(0);
+    });
+  };
+
   return (
     <MyCard {...styles.card}>
       <HStack {...styles.header}>
@@ -52,21 +78,20 @@ const Card = ({
 
       <HStack {...styles.iconWrapper}>
         {/* @ts-ignore */}
-        <Icon.Button
-          name="hearto"
-          backgroundColor={'transparent'}
-          color={'#000'}
-          onPress={() => {}}>
-          <Text>{noLikes}</Text>
-        </Icon.Button>
-        {/* @ts-ignore */}
-        <MaterialIcons.Button
-          name="comment"
-          backgroundColor={'transparent'}
-          color={'#000'}
-          onPress={() => {}}>
-          <Text>{noComments}</Text>
-        </MaterialIcons.Button>
+
+        <HStack p={ms(7.5)}>
+          <Pressable onPress={handleLike}>
+            <AnimatedView style={likeStyles}>
+              <Icon name={isLiked ? 'heart' : 'hearto'} size={20} />
+            </AnimatedView>
+          </Pressable>
+
+          <Text ml={hs(8)}>{noLikes}</Text>
+        </HStack>
+        <HStack p={ms(7.5)}>
+          <MaterialIcons name="comment" size={20} />
+          <Text ml={hs(8)}>{noComments}</Text>
+        </HStack>
       </HStack>
 
       <Pressable>
