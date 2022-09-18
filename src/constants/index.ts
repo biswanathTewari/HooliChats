@@ -1,3 +1,4 @@
 import screens from './screens';
+import SPACING from './spacing';
 
-export {screens};
+export {screens, SPACING};
