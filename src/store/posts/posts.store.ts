@@ -27,8 +27,25 @@ const postsSlice = createSlice({
     addPostFail(state, _action: PayloadAction<any>) {
       state.uploading = false;
     },
+    getAllPosts(state, _action: PayloadAction<any>) {
+      state.loading = true;
+    },
+    getAllPostsSuccess(state, action: PayloadAction<Array<IPost>>) {
+      state.loading = false;
+      state.posts = action.payload;
+    },
+    getAllPostsFail(state, _action: PayloadAction<any>) {
+      state.loading = false;
+    },
   },
 });
 
-export const {addPost, addPostSuccess, addPostFail} = postsSlice.actions;
+export const {
+  addPost,
+  addPostSuccess,
+  addPostFail,
+  getAllPosts,
+  getAllPostsSuccess,
+  getAllPostsFail,
+} = postsSlice.actions;
 export default postsSlice.reducer;
