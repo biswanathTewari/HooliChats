@@ -6,9 +6,11 @@ import {rootSaga} from './rootSaga';
 import {persistConfig} from './persistConfig';
 
 import auth from './auth/auth.store';
+import posts from './posts/posts.store';
 
 const combineReducer = combineReducers({
   auth,
+  posts,
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -32,3 +34,5 @@ export type AppDispatch = typeof store.dispatch;
 
 export * from './auth/auth.selectors';
 export * from './auth/auth.store';
+export * from './posts/posts.selectors';
+export * from './posts/posts.store';
